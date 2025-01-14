@@ -1,0 +1,22 @@
+services:
+  meilisearch:
+    image: getmeili/meilisearch:v1.11
+    container_name: meilisearch
+    ports:
+      - "7700:7700"
+    environment:
+      - MEILI_MASTER_KEY=MASTER_KEY
+    volumes:
+      - ./meili_data:/meili_data
+    restart: unless-stopped
+
+  solr:
+    image: solr:9.7.0
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./solr_data:/var/solr
+    command:
+      - solr-precreate
+      - gettingstarted
+    restart: unless-stopped
