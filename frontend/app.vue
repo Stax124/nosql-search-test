@@ -1,7 +1,7 @@
 <script setup>
 const { search } = useMeiliSearch("products");
 
-const limit = 48;
+const limit = 40;
 const results = ref([]);
 const offset = ref(0);
 const searchQuery = ref("");
@@ -50,37 +50,45 @@ onMounted(() => {
 
 <template>
 	<main>
-		<div class="search-container">
-			<div class="searchbox">
+		<div class="flex flex-col items-center gap-1 w-full sticky p-4">
+			<div class="w-full bg-white flex gap-4 flex-row items-center">
 				<input
+					:value="searchQuery"
+					class="w-full p-2 border-gray-500/35 border rounded-md"
 					type="text"
 					placeholder="Search for products"
-					:value="searchQuery"
-					@input="inputHandler"
 					@keydown="kbdHandler"
+					@input="inputHandler"
 				/>
 
-				<p class="offset">{{ offset }}</p>
+				<p class="ml-1 mr-3 aspect-square text-center">{{ offset }}</p>
 			</div>
 
-			<div class="searchbox">
+			<div class="w-full flex justify-center items-center gap-4">
 				<input
+					v-model="filter"
+					class="w-full p-2 border-gray-500/35 border rounded-md"
 					type="text"
 					placeholder="Filter"
-					v-model="filter"
 					@keydown="kbdHandler"
 				/>
 			</div>
 		</div>
 
-		<div class="results">
-			<div v-for="result in results" :key="result.id" class="result">
+		<div
+			class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4"
+		>
+			<div
+				v-for="result in results"
+				:key="result.id"
+				class="flex flex-col items-center p-2 rounded-lg hover:shadow-lg"
+			>
 				<img :src="result.image_url" alt="product" />
 				<p>{{ result.product_name }}</p>
 			</div>
 		</div>
 
-		<button @click="searchNext" class="search-more">Load more</button>
+		<UButton size="lg" @click="searchNext" class="m-4" block>Load more</UButton>
 	</main>
 </template>
 
@@ -91,56 +99,7 @@ main {
 	flex-direction: column;
 	align-items: center;
 	gap: 4px;
+	margin: 8px;
 	box-sizing: border-box;
-}
-
-.search-container {
-	width: 100%;
-	position: sticky;
-	top: 8px;
-	background-color: white;
-	display: flex;
-	flex-direction: column;
-	gap: 4px;
-}
-
-.searchbox {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-}
-
-input {
-	flex: 1;
-	width: 100%;
-	padding: 10px;
-	font-size: 1.2rem;
-}
-
-.offset {
-	margin: 4px 12px;
-}
-
-.results {
-	width: 100%;
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	gap: 12px;
-	padding: 12px;
-}
-
-.result {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 8px;
-}
-
-.search-more {
-	width: 100%;
-	margin: 12px auto;
-	padding: 8px 16px;
-	font-size: 1.2rem;
 }
 </style>

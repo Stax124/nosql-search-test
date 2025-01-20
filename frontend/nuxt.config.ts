@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
 	compatibilityDate: "2024-11-01",
 	devtools: { enabled: true },
-	modules: ["nuxt-meilisearch"],
+	modules: ["nuxt-meilisearch", "@nuxt/ui"],
 	meilisearch: {
 		hostUrl: "http://localhost:7700",
 		searchApiKey:
