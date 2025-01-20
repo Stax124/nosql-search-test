@@ -11,4 +11,7 @@ export default defineNuxtConfig({
 			theme: "algolia",
 		},
 	},
+	colorMode: {
+		preference: "light",
+	},
 });
