@@ -1,6 +1,6 @@
 services:
   meilisearch:
-    image: getmeili/meilisearch:v1.11
+    image: getmeili/meilisearch:v1.12
     container_name: meilisearch
     ports:
       - "7700:7700"
@@ -10,13 +10,22 @@ services:
       - ./meili_data:/meili_data
     restart: unless-stopped
 
-  solr:
-    image: solr:9.7.0
+  nuxt:
+    build:
+      context: .
+      dockerfile: nuxt.dockerfile
+    container_name: nuxt
     ports:
-      - "8983:8983"
-    volumes:
-      - ./solr_data:/var/solr
-    command:
-      - solr-precreate
-      - gettingstarted
+      - "3000:3000"
     restart: unless-stopped
+
+  # solr:
+  #   image: solr:9.7.0
+  #   ports:
+  #     - "8983:8983"
+  #   volumes:
+  #     - ./solr_data:/var/solr
+  #   command:
+  #     - solr-precreate
+  #     - gettingstarted
+  #   restart: unless-stopped
